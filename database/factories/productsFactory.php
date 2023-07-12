@@ -22,7 +22,7 @@ class productsFactory extends Factory
         'price' => 300,
         'quantity' => 400,
         'image' => fake()->text(),
-        'mau_sac' => fake()->text(),
+        'mau_sac' => fake()->safeColorName(),
         'id_cate' => 1,
         'ngay_nhap' => fake()->date(),
         'status' => 1

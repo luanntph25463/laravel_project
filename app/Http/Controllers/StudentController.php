@@ -16,7 +16,7 @@ class StudentController extends Controller
 
         $name = "luan";
         $user1 = DB::table('student')->get();
-        $user2 = DB::table('student')->select('id','name','email')->get();
+        $user2 = DB::table('student')->select('id','name','email','image')->get();
         $user3 = DB::table('student')->where('id','=',1)->first();
         $countstudents = DB::table('student')->count();
         $studentCondition = DB::table('student')->where('id','>=',1)->where('id','<=',5)->orWhere('id','=',10)->get();
@@ -27,7 +27,12 @@ class StudentController extends Controller
     }
     public function store(StudentRequest $request){
         if($request->post()){
-            $student  = Student::create($request->except("_token"));
+            // nếu như tồn tại file sẽ upload file
+            $params = $request->except('_token');
+            if($request->hasFile('image') && $request->file('image')->isValid()){
+                $params['image'] = uploadFile('hinh', $request->file('image'));
+            }
+            $student  = student::create($params);
             if($student->id){
                 Session::flash('success','ADD Thành Công');
                 return redirect()->route('student.list');
@@ -50,5 +55,10 @@ class StudentController extends Controller
         }
         $student = Student::find($id);
         return view('student.update',compact('student'));
+    }
+    public function delete(){
+        $student = Student::find(1);
+        $student->delete();
+        return redirect()->route('student.list');
     }
 }

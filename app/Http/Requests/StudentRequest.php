@@ -35,7 +35,7 @@ class StudentRequest extends FormRequest
                         $rules = [
                             'name' => 'required',
                             'email' => 'required|email:filter|unique:users',
-                            'image' => 'required',
+                            'image' => 'required | image | mimes:jpeg,jpg,png,PNG | max:5120',
                         ];
 
                         break;
@@ -59,6 +59,7 @@ class StudentRequest extends FormRequest
         return [
             'name.required' => 'Tên Không Được Để Trống',
             'email.required' => 'Email Không Được Để Trống',
+            'image.required' => 'Ảnh Không Được Để Trống',
             'email.unique' => 'Đã Tồn Tại',
         ];
     }

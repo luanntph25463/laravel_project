@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('khachhang', function (Blueprint $table) {
             $table->id();
-            $table->string("ten_kh");
-            $table->string("dia_chi");
+            $table->string("ten_kh")->nullable();
+            $table->string("dia_chi")->nullable();
             $table->string("adress")->nullable();
             $table->integer("status")->default(1);
             $table->date("ngay_sinh")->nullable();

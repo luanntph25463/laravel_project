@@ -7,6 +7,7 @@
             <td>ID</td>
             <td>Name</td>
             <td>Email</td>
+            <td>Hình</td>
         </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
                 <th>{{$user->id}}</th>
                 <th>{{$user->name}}</th>
                 <th>{{$user->email}}</th>
+                <th><img width="100" src="{{$user->image? ''.Storage::url($user->image): ''}}" alt=""></th>
                 <th><a class="btn-warning" href="{{ route('student_edit', ['id'=>$user->id]) }}">Sửa</a></th>
         </tr>
 

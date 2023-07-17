@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('student', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string("name")->nullable();
             $table->string("email")->unique();
+            $table->string("image")->nullable();
             $table->string("adress")->nullable();
             $table->integer("status")->default(1);
             $table->date("date_or_birth")->nullable();

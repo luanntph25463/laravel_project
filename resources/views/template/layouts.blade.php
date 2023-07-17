@@ -84,6 +84,11 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
+<script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('libs/input-mask/jquery.inputmask.js') }}"></script>
+@yield('script')
+
+
 <script src="{{ asset('boostraps/js/bootstrap.bundle.js') }}"></script>
 
 <script src="{{ asset('boostraps/js/bootstrap.js') }}"></script>

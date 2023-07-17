@@ -17,4 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('student/',[StudentController::class,'index']);
+Route::prefix('student')->group(function () {
+Route::get('student/',[StudentController::class,'index'])->name('student.list');
+Route::match(['get', 'post'], '/add',[StudentController::class,'store'])->name('student_add');
+Route::match(['get', 'post'], '/edit/{id}',[StudentController::class,'edit'])->name('student_edit');
+});

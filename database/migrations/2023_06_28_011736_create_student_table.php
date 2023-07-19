@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("adress")->nullable();
             $table->integer("status")->default(1);
             $table->date("date_or_birth")->nullable();
+            $table->softDeletes(); // add
             $table->timestamps();
         });
     }

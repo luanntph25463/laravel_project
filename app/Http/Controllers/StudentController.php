@@ -7,6 +7,7 @@ use App\Models\student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -15,8 +16,12 @@ class StudentController extends Controller
         $title = "Hello larravel";
 
         $name = "luan";
-        $user1 = DB::table('student')->get();
-        $user2 = DB::table('student')->select('id','name','email','image')->get();
+        $user1 = DB::table('student')
+        ->whereNull('deleted_at')
+
+        ->get();
+        $user2 = DB::table('student')->select('id','name','email','image')
+        ->get();
         $user3 = DB::table('student')->where('id','=',1)->first();
         $countstudents = DB::table('student')->count();
         $studentCondition = DB::table('student')->where('id','>=',1)->where('id','<=',5)->orWhere('id','=',10)->get();
@@ -44,8 +49,20 @@ class StudentController extends Controller
         return view('student.create');
     }
     public function edit(StudentRequest $request,$id){
+        $student = Student::find($id);
         if($request->isMethod('post')){
-            $student  = DB::table('student')->where('id',$id)->update($request->except("_token"));
+            $params = $request->except("_token");
+            if($request->hasFile('image') && $request->file('image')->isValid()){
+                // xóa ảnh cũ đi
+                $resultDL = Storage::delete('/public/'.$student->image);
+                // có ảnh mới sẽ upload còn không thì vẫn giữ nguyên
+                if($resultDL){
+                    $params['image'] = uploadFile('hinh', $request->file('image'));
+                }
+            }else{
+                $params['image'] = $student->image;
+            }
+            $student  = DB::table('student')->where('id',$id)->update($params);
             if($student){
                 Session::flash('success','Sửa Thành Công');
                 return redirect()->route('student.list');
@@ -53,12 +70,12 @@ class StudentController extends Controller
             // $student->fill($request->post())->save();
 
         }
-        $student = Student::find($id);
         return view('student.update',compact('student'));
     }
-    public function delete(){
-        $student = Student::find(1);
-        $student->delete();
+    public function delete($id){
+         Student::where('id',$id)->delete();
+        Session::flash('success','Xóa Thành Công');
+
         return redirect()->route('student.list');
     }
 }

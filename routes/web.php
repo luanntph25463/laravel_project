@@ -21,4 +21,5 @@ Route::prefix('student')->group(function () {
 Route::get('student/',[StudentController::class,'index'])->name('student.list');
 Route::match(['get', 'post'], '/add',[StudentController::class,'store'])->name('student_add');
 Route::match(['get', 'post'], '/edit/{id}',[StudentController::class,'edit'])->name('student_edit');
+Route::get('/student/delete/{id}',[StudentController::class,'delete'])->name('student_delete');
 });

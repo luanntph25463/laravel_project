@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,7 @@ class studentFactory extends Factory
             //
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
-            'date_or_birth' => fake()->date()
+            'date_or_birth' => fake()->date(),
         ];
     }
 }
